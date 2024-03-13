@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import Products from "./Products";
-import Loading from "./Loading";
-import { ProductsContext } from "../context/context";
+import Loading from "./ui/Loading";
+import { ProductContext } from "../context/context";
 
 export default function ProductsList() {
-  const {products,isLoading} = useContext(ProductsContext)
+  const {products,isLoading} = useContext(ProductContext)
   return (
     <div id="products" className="mb-10 mx-10 text-slate-800">
       <div>

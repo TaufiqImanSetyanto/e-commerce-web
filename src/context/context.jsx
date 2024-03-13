@@ -1,10 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 
-export const ProductsContext = createContext();
+export const ProductContext = createContext();
 
-export const ProductContextProvider = ({children}) => {
+export const ProductContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [detail, setDetail] = useState([]);
+  const [carts, setCarts] = useState([]);
+  const [totalHarga, setTotalHarga] = useState(0);
   useEffect(() => {
     const getProduct = async () => {
       setIsLoading(true);
@@ -15,9 +18,5 @@ export const ProductContextProvider = ({children}) => {
     };
     getProduct();
   }, []);
-  return(
-    <ProductsContext.Provider value={{products,isLoading}}>
-      {children}
-    </ProductsContext.Provider>
-  )
+  return <ProductContext.Provider value={{ products, isLoading, detail, setDetail, carts, setCarts, totalHarga, setTotalHarga }}>{children}</ProductContext.Provider>;
 };
