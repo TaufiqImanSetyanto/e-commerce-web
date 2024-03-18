@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useParams } from "react-router-dom";
-import { ProductContext } from "../context/context";
+import { ProductContext } from "../context/product";
 import DetailItem from "../components/DetailItem";
 
 export default function Detail() {

@@ -3,7 +3,7 @@ import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 import { MdOutlineEmail, MdOutlinePhone } from "react-icons/md";
 export default function Footer() {
   return (
-    <div className="bg-cyan-800 h-30 grid grid-cols-1 md:grid-cols-3 text-white md:place-items-center p-5 gap-5 ">
+    <div className="bg-emerald-950 dark:bg-dark h-30 grid grid-cols-1 md:grid-cols-3 text-white md:place-items-center p-5 gap-5  duration-500">
       <div>
         <h1 className="text-2xl font-bold">Shopku</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem, mollitia?</p>

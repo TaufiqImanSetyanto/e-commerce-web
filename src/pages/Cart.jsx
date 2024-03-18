@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import NavBar from "../components/NavBar";
-import { ProductContext } from "../context/context";
+import { ProductContext } from "../context/product";
 import Ringkasan from "../components/Ringkasan";
 import CartItem from "../components/CartItem";
 
@@ -34,12 +34,12 @@ export default function Cart() {
     setCarts([...carts]);
   }
   return (
-    <div>
+    <div className="dark:bg-dark min-h-screen duration-500">
       <NavBar />
-      <div className="m-5 text-slate-800">
+      <div className="m-5 text-slate-800 dark:text-white ">
         <h1 className="text-2xl font-bold my-2 ">Cart</h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="md:col-span-2 shadow p-2 md:px-6">
+          <div className="md:col-span-2 shadow p-2 md:px-6 rounded dark:bg-semidark">
             {carts.length != 0 ? (
               carts.map((cart) => (
                 <CartItem

@@ -7,12 +7,12 @@ export default function CartItem({ id, image, title, category, price, qty, onPlu
   return (
     <div key={id} className="grid grid-cols-6 mb-2">
       <div className="grid justify-center">
-        <img src={image} alt="" className="border p-1 rounded max-w-20 max-h-20 my-3 mx-5" />
+        <img src={image} alt="" className=" p-1 max-w-20 max-h-20 my-3 mx-5" />
       </div>
       <div className="grid grid-flow-col grid-cols-3 col-span-5 justify-between w-full md:m-5 gap-3">
         <div className="ml-5 md:ml-2 col-span-2 ">
           <p className="text-lg font-medium">{title}</p>
-          <p className="text-slate-600">{category}</p>
+          <p className="text-slate-500 dark:text-slate-300">{category}</p>
         </div>
         <div className="grid justify-end col-span-1 ">
           <p className="text-xl font-semibold mr-4">

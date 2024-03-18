@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
-    <div className="flex justify-center items-center min-h-screen text-slate-800">
-      <div className="shadow max-w-sm md:max-w-lg w-full rounded-lg p-8">
-        <h1 className="text-3xl font-bold text-cyan-600 -mt-3 mb-2">Login</h1>
+    <div className="flex justify-center items-center min-h-screen text-slate-800 dark:bg-dark dark:text-white">
+      <div className="shadow max-w-sm md:max-w-lg w-full rounded-lg p-8 dark:bg-semidark">
+        <h1 className="text-3xl font-bold text-emerald-700 -mt-3 mb-2">Login</h1>
         <p className="mb-2 text-xs font-light">
           Belum punya akun?
-          <Link to={"/register"} className="text-cyan-600 font-normal">
+          <Link to={"/register"} className="text-emerald-600 font-normal">
             Register
           </Link>
         </p>
