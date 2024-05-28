@@ -7,14 +7,9 @@ import CartItem from "../components/CartItem";
 export default function Cart() {
   const { carts, setCarts, totalHarga, setTotalHarga } = useContext(ProductContext);
   useEffect(() => {
-    const qty = carts.map((cart) => cart.qty * cart.price);
+    const qty = carts.map((cart) => cart.qty * (cart.price.normalPrice - cart.price.discountPrice));
     const total = qty.reduce((acc, cur) => acc + cur, 0);
-    setTotalHarga(
-      total.toLocaleString("en-US", {
-        style: "currency",
-        currency: "USD",
-      })
-    );
+    setTotalHarga(total);
   }, [carts]);
 
   function onDeleteCartHandler(id) {
@@ -33,6 +28,7 @@ export default function Cart() {
     minusQty.qty -= 1;
     setCarts([...carts]);
   }
+  console.log(carts);
   return (
     <div className="dark:bg-dark min-h-screen duration-500">
       <NavBar />
@@ -46,8 +42,7 @@ export default function Cart() {
                   id={cart.id}
                   image={cart.image}
                   title={cart.title}
-                  category={cart.category}
-                  price={cart.price}
+                  fixedPrice={cart.price.normalPrice - cart.price.discountPrice}
                   qty={cart.qty}
                   onMinusQty={() => onMinusQtyCartHandler(cart.id)}
                   onPlusQty={() => onPlusQtyCartHandler(cart.id)}

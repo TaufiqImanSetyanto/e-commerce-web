@@ -44,7 +44,7 @@ export default function Hero() {
     <div className="py-8 md:py-16 overflow-hidden text-slate-800 dark:bg-dark dark:text-white duration-500">
       <Slider {...settings}>
         {heroList.map((hero) => (
-          <div>
+          <div key={hero.id}>
             <div className="grid grid-cols-1 sm:grid-cols-2 px-5 ">
               <div className="grid justify-center">
                 <img src={hero.img} alt="hero" className="max-h-max" />

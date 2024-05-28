@@ -22,7 +22,7 @@ export default function Detail() {
     <div>
       <NavBar />
       {detail.map((detail) => (
-        <DetailItem id={detail.id} image={detail.image} title={detail.title} price={detail.price} rate={detail.rating.rate} count={detail.rating.count} description={detail.description} onSetCarts={onSetCartsHandler} />
+        <DetailItem id={detail.id} image={detail.image} title={detail.title} normalPrice={detail.price.normalPrice} discountPrice={detail.price.discountPrice} rating={detail.rating} description={detail.description} onSetCarts={onSetCartsHandler} />
       ))}
     </div>
   );

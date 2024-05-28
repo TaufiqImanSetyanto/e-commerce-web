@@ -11,7 +11,7 @@ export const ProductContextProvider = ({ children }) => {
   useEffect(() => {
     const getProduct = async () => {
       setIsLoading(true);
-      const response = await fetch("https://fakestoreapi.com/products");
+      const response = await fetch("http://localhost:4000/allproducts");
       const products = await response.json();
       setProducts(products);
       setIsLoading(false);

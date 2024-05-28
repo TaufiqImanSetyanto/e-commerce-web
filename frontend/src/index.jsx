@@ -12,6 +12,11 @@ import Detail from "./pages/Detail.jsx";
 import NotFound404 from "./pages/NotFound404.jsx";
 import { ProductContextProvider } from "./context/product.jsx";
 import { ThemeContextProvider } from "./context/theme.jsx";
+import { UserContextProvider } from "./context/user.jsx";
+import Admin from "./pages/admin/Admin.jsx";
+import AddProduct from "./components/admin/AddProduct.jsx";
+import ListProducts from "./components/admin/ListProducts.jsx";
+import HomeAdmin from "./components/admin/HomeAdmin.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +24,25 @@ const router = createBrowserRouter([
     element: <Main />,
     errorElement: <NotFound404 />,
   },
+  {
+    path: "/admin",
+    element: <Admin />,
+    children: [
+      {
+        path: "",
+        element: <HomeAdmin />,
+      },
+      {
+        path: "addproduct",
+        element: <AddProduct />,
+      },
+      {
+        path: "listproducts",
+        element: <ListProducts />,
+      },
+    ],
+  },
+
   {
     path: "/login",
     element: <Login />,
@@ -40,9 +64,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeContextProvider>
-      <ProductContextProvider>
-        <RouterProvider router={router} />
-      </ProductContextProvider>
+      <UserContextProvider>
+        <ProductContextProvider>
+          <RouterProvider router={router} />
+        </ProductContextProvider>
+      </UserContextProvider>
     </ThemeContextProvider>
   </React.StrictMode>
 );
