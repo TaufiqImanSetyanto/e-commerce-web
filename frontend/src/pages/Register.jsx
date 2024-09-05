@@ -26,6 +26,8 @@ export default function Register() {
     if (response.success) {
       localStorage.setItem("auth-token", response.token);
       window.location.replace("/");
+    } else {
+      alert(response.errors);
     }
   }
 
@@ -39,12 +41,10 @@ export default function Register() {
             Login
           </Link>
         </p>
-        <form action="">
-          <Input name="name" value={formUser.name} handler={onChangeHandler} type="text" placeholder="Masukkan nama" title="Name" />
-          <Input name="email" value={formUser.email} handler={onChangeHandler} type="email" placeholder="example@gmail.com" title="Email" />
-          <Input name="password" value={formUser.password} handler={onChangeHandler} type="password" placeholder="********" title="Password" />
-          <Button handler={() => onSignUpHandler()} children={"Register"} />
-        </form>
+        <Input name="name" value={formUser.name} handler={onChangeHandler} type="text" placeholder="Masukkan nama" title="Name" />
+        <Input name="email" value={formUser.email} handler={onChangeHandler} type="email" placeholder="example@gmail.com" title="Email" />
+        <Input name="password" value={formUser.password} handler={onChangeHandler} type="password" placeholder="********" title="Password" />
+        <Button handler={() => onSignUpHandler()} children={"Register"} />
       </div>
     </div>
   );

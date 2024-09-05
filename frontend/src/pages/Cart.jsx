@@ -17,16 +17,49 @@ export default function Cart() {
     delete deleteCart.qty;
     const updateCarts = carts.filter((cart) => cart.id !== id);
     setCarts(updateCarts);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/deletefromcart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({deleteCart}),
+      });
+    }
   }
   function onPlusQtyCartHandler(id) {
-    const minusQty = carts.find((cart) => cart.id == id);
-    minusQty.qty += 1;
+    const plusQty = carts.find((cart) => cart.id == id);
+    plusQty.qty += 1;
     setCarts([...carts]);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/pluscart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({plusQty}),
+      });
+    }
   }
   function onMinusQtyCartHandler(id) {
     const minusQty = carts.find((cart) => cart.id == id);
     minusQty.qty -= 1;
     setCarts([...carts]);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/minuscart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({minusQty}),
+      });
+    }
   }
   console.log(carts);
   return (

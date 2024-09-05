@@ -6,12 +6,14 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+require('dotenv').config();
+const db = process.env.MONGO_DB_URI;
 
 app.use(express.json());
 app.use(cors());
 
 // db connect mongodb
-mongoose.connect("mongodb+srv://taufiqimansetyanto:101220032@cluster0.kma90ho.mongodb.net/e-commerce");
+mongoose.connect(`${db}`);
 
 // api creation
 app.get("/", (req, res) => {
@@ -85,7 +87,8 @@ app.post("/addproduct", async (req, res) => {
     id = 1;
   }
   const product = new Product({
-    id: id,...req.body 
+    id: id,
+    ...req.body,
   });
   console.log(product);
   await product.save();
@@ -174,6 +177,94 @@ app.post("/signin", async (req, res) => {
     res.json({ success: false, errors: "Wrong email" });
   }
 });
+
+//middleware fetch user
+const fetchUser = async (req, res, next) => {
+  const token = req.header("auth-token");
+  if (!token) {
+    res.status(401).ssend({ errors: "Please authenticate using validate token" });
+  } else {
+    try {
+      const data = jwt.verify(token, "secret_ecom");
+      req.user = data.user;
+      next();
+    } catch (error) {
+      res.static(401).send({ errors: "Please authenticate using validate token" });
+    }
+  }
+};
+
+// endpoint addtocart
+app.post("/addtocart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    const cartProducts = req.body.cartProducts;
+    const checkExist = userData.cart.find((product) => product.id === cartProducts.id);
+    if (checkExist) {
+      checkExist.qty += 1;
+    } else {
+      userData.cart.push(cartProducts);
+    }
+    await Users.findOneAndUpdate({ _id: req.user.id }, userData);
+    console.log(cartProducts);
+    console.log(userData);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// endpoint remove product
+app.post("/deletefromcart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    const cartProducts = req.body.deleteCart;
+    const checkExist = userData.cart.find((product) => product.id === cartProducts.id);
+    if (checkExist) {
+      userData.cart = userData.cart.filter((product) => product.id !== cartProducts.id);
+    }
+    await Users.findOneAndUpdate({ _id: req.user.id }, userData);
+    console.log(cartProducts);
+    console.log(userData);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// endpoint plus cart
+app.post("/pluscart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    const cartProducts = req.body.plusQty;
+    const checkExist = userData.cart.find((product) => product.id === cartProducts.id);
+    if (checkExist) {
+      checkExist.qty += 1;
+    }
+    await Users.findOneAndUpdate({ _id: req.user.id }, userData);
+    console.log(cartProducts);
+    console.log(userData);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// endpoint plus cart
+app.post("/minuscart", fetchUser, async (req, res) => {
+  try {
+    let userData = await Users.findOne({ _id: req.user.id });
+    const cartProducts = req.body.minusQty;
+    const checkExist = userData.cart.find((product) => product.id === cartProducts.id);
+    if (checkExist) {
+      checkExist.qty -= 1;
+    }
+    await Users.findOneAndUpdate({ _id: req.user.id }, userData);
+    console.log(cartProducts);
+    console.log(userData);
+  } catch (error) {
+    console.error(error);
+  }
+});
+// endpoint getcart from user
+app.post("/getcart", fetchUser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  res.json(userData.cart)
+})
 
 app.listen(port, (error) => {
   if (!error) {

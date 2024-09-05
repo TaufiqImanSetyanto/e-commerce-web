@@ -17,12 +17,33 @@ export default function Detail() {
       cartProducts.qty = 1;
       setCarts([...carts, cartProducts]);
     } else cartProducts.qty += 1;
+    console.log(cartProducts);
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/addtocart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({cartProducts}),
+      });
+    }
   }
   return (
     <div>
       <NavBar />
       {detail.map((detail) => (
-        <DetailItem id={detail.id} image={detail.image} title={detail.title} normalPrice={detail.price.normalPrice} discountPrice={detail.price.discountPrice} rating={detail.rating} description={detail.description} onSetCarts={onSetCartsHandler} />
+        <DetailItem
+          id={detail.id}
+          image={detail.image}
+          title={detail.title}
+          normalPrice={detail.price.normalPrice}
+          discountPrice={detail.price.discountPrice}
+          rating={detail.rating}
+          description={detail.description}
+          onSetCarts={onSetCartsHandler}
+        />
       ))}
     </div>
   );

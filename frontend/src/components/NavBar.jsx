@@ -22,9 +22,21 @@ export default function () {
         </Link>
       </div>
       <div className="flex justify-center gap-6 items-center mr-3">
-        <Link to={"/login"}>
-          <Buttonv2>Login</Buttonv2>
-        </Link>
+        {localStorage.getItem("auth-token") ? (
+          <Buttonv2
+            handler={() => {
+              localStorage.removeItem("auth-token");
+              window.location.replace("/");
+            }}
+          >
+            Logout
+          </Buttonv2>
+        ) : (
+          <Link to={"/login"}>
+            <Buttonv2>Login</Buttonv2>
+          </Link>
+        )}
+
         <Link to={"/cart"}>
           {carts.length != 0 ? (
             <div className="bg-red-600 w-3 h-3 rounded-full absolute ml-3 -mt-1.5 flex place-content-center opacity-90">

@@ -17,6 +17,19 @@ export const ProductContextProvider = ({ children }) => {
       setIsLoading(false);
     };
     getProduct();
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/getcart", {
+        method: "POST",
+        headers: {
+          Accept: "application/form-data",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+          "Content-Type": "application/json",
+        },
+        body: "",
+      })
+        .then((res) => res.json())
+        .then((data) => setCarts(data));
+    }
   }, []);
   return <ProductContext.Provider value={{ products, isLoading, detail, setDetail, carts, setCarts, totalHarga, setTotalHarga }}>{children}</ProductContext.Provider>;
 };
